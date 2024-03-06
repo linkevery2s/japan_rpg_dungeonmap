@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+	<meta charset='UTF-8' name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+	<meta name="author" content="仁志">
+	<meta name="keywords" content="防災,災害対策,地震時の避難方法">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      background-position: center top;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .textScreen {
+      font-family: "Meiryo", "Hiragino Maru Gothic Pro", sans-serif;
+      margin: 70vh .2em .2em .2em;
+      border: 3px solid white;
+      background-color: black;
+      border-radius: 0.3em;
+      padding: .8em;
+      height: 90px;
+      overflow-y: scroll;
+      font-size: 1em !important;
+      bottom: 0 !important;
+      transform: translate(0%, 0%);
+    }
+
+    #footer {
+      position: fixed;
+      width: 100%;
+      background-color: #000;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      bottom: 0;
+      z-index: 10;
+      height: 28px;
+      text-align: right;
+
+    }
+
+    #footer a {
+      text-decoration: none;
+      border-bottom: 1px dotted #fff;
+      color: #fff;
+    }
+  </style>
+  <title>地震時の避難方法</title>
+
+
+</head>
+
+<body>
+  <script type="module">
+    import {
+      bg,
+      show
+    } from "https://js.sabae.cc/egadv.js";
+
+    const hash = location.hash;
+
+    const hash1 = hash.split("!");
+
+    let number = hash1[1];
+    console.log(number);
+    number = number - 1;
+
+    const res = await fetch('https://raw.githubusercontent.com/linkevery2s/eye/main/practice/data/refuge.json');
+    const data = await res.json();
+
+    const max = Object.keys(data[number]).length - 3;
+
+    console.log(max);
+
+    /* 背景画像変更 */
+    document.body.style.backgroundImage = "url(img/" + data[number].id + ".jpg)";
+
+    await show(data[number].place);
+    await show(data[number].rule);
+
+    for (let j = 1; j < max + 1; j++) {
+      await show(data[number]["point" + j]);
+    }
+
+    await show("END");
+  </script>
+
+  <div id="footer">&copy; <a href="https://github.com/code4fukui/egadv" target="_blank">egadv</a>, <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank">CC BY 4.0</a>　</div>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<title>「日本の１日」ダンジョンマップ</title>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="「日本の１日」ダンジョンマップ" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://japan-rpg-dungeonmap.netlify.app/ogp.png" />
+    <meta name="description" content="日本の１日の人口動態をRPGダンジョンマップにしてみました。このダンジョンをクリアすると、日本の見方が変わるかもしれません。" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="「日本の１日」ダンジョンマップ" />
+    <meta name="twitter:image" content="https://japan-rpg-dungeonmap.netlify.app/ogp.png" />
+    <meta name="author" content="仁志">
+    <meta name="keywords" content="日本,日本の１日,RPG,ダンジョン,マップ,map,dungeon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="icon" href="images/apple-touch-icon.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MPP84V2NHB');
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+        integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+        integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.css" rel="stylesheet">
+
+    <style>
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+    </style>
+    <script type="module">
+
+        onload = async () => {
+
+            let image = {
+                url: './map.png',
+                width: 2310,
+                height: 2030
+            };
+
+            let minZoom = 3, maxZoom = 3, DefalultZoom = 4;
+
+            const map = L.map('map', {
+                crs: L.CRS.Simple,
+                minZoom: minZoom,
+                maxZoom: maxZoom,
+                zoomControl: false
+            });
+
+            let imageBounds = L.latLngBounds([
+                map.unproject([0, image.height], DefalultZoom),
+                map.unproject([image.width, 0], DefalultZoom)
+            ]);
+
+            const tiles = L.tileLayer("", {
+                attribution: "&copy; <a href='https://hitoshi2s.netlify.app/' target='_blank'>仁志</a>, <a href='https://watabou.github.io/' target='_blank'>Watabou's Procgen Arcana</a>"
+            }).addTo(map);
+
+            //map.fitBounds(imageBounds);
+            map.setMaxBounds(imageBounds.pad(0.5));
+
+            map.setView([-25, 60], 3);
+
+            L.imageOverlay(image.url, imageBounds).addTo(map);
+
+            //marker配置
+            let pulsingIcon = L.icon.pulse({ iconSize: [12, 12], color: 'red' });
+
+            let top_position = L.marker([-15.3, 59.1], { icon: pulsingIcon }).addTo(map)
+                .bindPopup("現在地<br><br><a href='./concept.html'>このマップについて</a>")
+                .openPopup();
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="map"></div>
+</body>
+
+</html>
