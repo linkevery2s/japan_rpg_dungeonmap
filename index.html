@@ -83,11 +83,16 @@
             L.imageOverlay(image.url, imageBounds).addTo(map);
 
             //marker配置
-            let pulsingIcon = L.icon.pulse({ iconSize: [12, 12], color: 'red' });
+            let icon_red = L.icon.pulse({ iconSize: [12, 12], color: 'red' });
 
-            let top_position = L.marker([-15.3, 59.1], { icon: pulsingIcon }).addTo(map)
+            let top_position = L.marker([-15.3, 59.1], { icon: icon_red }).addTo(map)
                 .bindPopup("現在地<br><br><a href='./concept.html'>このマップについて</a>")
                 .openPopup();
+
+            let icon_blue = L.icon.pulse({ iconSize: [12, 12], color: 'blue' });
+
+            let baby = L.marker([-19.5, 111.6], { icon: icon_blue }).addTo(map)
+                .bindPopup("<a href='./baby.html'>出生の間</a>");
 
 
         }
